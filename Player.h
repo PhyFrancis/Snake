@@ -19,6 +19,9 @@ class Player {
     //*! set game board size and initial position
     void initAI(int sizeX, int sizeY, int initX, int initY);
 
+    //*! disconnect from AI bot
+    void end();
+
     //*! generate move according to rival's move
     Pos genMove(const Pos &rivalMove);
 

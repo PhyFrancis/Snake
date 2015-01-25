@@ -20,11 +20,9 @@ void Player::setAI(std::string ai) {
 }
 
 void Player::initAI(int sizeX, int sizeY, int initX, int initY) {
-	
-	if(!initialized) {
-		pipe(p2c); // parent to child
-		pipe(c2p); // child to parent
-	}
+  if(initialized) end();
+  pipe(p2c); // parent to child
+  pipe(c2p); // child to parent
 
   // convetion: write to the AI process using p2c[1], and read from AI process using c2p[0]:
 	
@@ -44,36 +42,47 @@ void Player::initAI(int sizeX, int sizeY, int initX, int initY) {
 
     std::string x = "-x " + std::to_string(sizeX);
     std::string y = "-y " + std::to_string(sizeY);
-    execl(this->AI.c_str(), x.c_str(), y.c_str(), (char*) NULL);
+    execl(this->AI.c_str(), this->AI.c_str(), x.c_str(), y.c_str(), (char*) NULL);
     exit(0);
   }
   else {
+		// close un-used ends;
+		close(p2c[0]);
+		close(c2p[1]);
+
     std::string init = std::to_string(initX) + " " + std::to_string(initY) + " \n";
     write(p2c[1], init.c_str(), init.size());
-
-    std::string send;
-
-    while(getline(std::cin, send)) {
-      printf("Sent to AI: %s; ",send.c_str());
-      send = send + '\n';
-      write(p2c[1], send.c_str(), send.size());
-
-      char buff[BUFFSIZE];
-      read(c2p[0], buff, BUFFSIZE); // read from the process. Note that this will catch 
-      std::stringstream ss; ss << buff;
-      int moveX, moveY;
-      ss >> moveX >> moveY;
-      printf("reveive from AI: %d %d\n", moveX, moveY);
-    }
   }
-  // waitpid(pid, NULL, 0);
+
 	initialized = true;
 }
 
 Pos Player::genMove(const Pos &rivalMove) {
+  
+  int rival_X = rivalMove.first;
+  int rival_Y = rivalMove.second;
+
+  std::string send;
+  send = std::to_string(rival_X) + " " + std::to_string(rival_Y);
+  printf("Sent to AI: %s; ",send.c_str());
+  send += " \n";
+  write(p2c[1], send.c_str(), send.size());
+
+  char buff[BUFFSIZE];
+  read(c2p[0], buff, BUFFSIZE); // read from the AI process. 
+  std::stringstream ss; ss << buff;
+  int moveX, moveY;
+  ss >> moveX >> moveY;
+  printf("reveive from AI: %d %d\n", moveX, moveY);
+}
+
+void Player::end() {
+  kill(pid, 9);
+  initialized = false;
 }
 
 Player::~Player() {
+  end();
 	close(p2c[0]); close(p2c[1]); 
 	close(c2p[0]); close(c2p[1]); 
 }
