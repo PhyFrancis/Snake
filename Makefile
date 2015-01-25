@@ -15,17 +15,6 @@ CXXFLAGS=
 ASFLAGS= 
 DFLAGS += 
 
-#
-# Libraries for the Columbia code
-#
-# (These are for the scalar version of the code)
-#
-#
-
-#
-#  targets
-#
-
 all:$(BIN)
 
 .SUFFIXES:

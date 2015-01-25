@@ -32,8 +32,8 @@ int main() {
   b.setPlayer("AI/ai.py", "AI/ai.py");
   
   for (int i = 0; i < 100; i++) {
-    if (b.genNextMove() == 1)
-      break;
+    if (b.genNextMove() == 1) break;
   }
   b.printBoard();
+  b.printBoardFancy();
 }

@@ -4,9 +4,11 @@
 #include <string>
 #include <sys/wait.h>
 
-#include <iostream>
+// #include <iostream>
 
 #define BUFFSIZE 1024
+
+Pos Player::die = std::make_pair(-1,-1);
 
 Player::Player() {
 	initialized = false;
@@ -22,7 +24,7 @@ void Player::initAI(int sizeX, int sizeY, int initX, int initY) {
   pipe(p2c); // parent to child
   pipe(c2p); // child to parent
 
-  // convetion: write to the AI process using p2c[1], and read from AI process using c2p[0]:
+  // convention: write to AI process using p2c[1], and read from AI process using c2p[0]:
 	
   pid = fork();
   if(pid < 0) {
@@ -61,23 +63,20 @@ Pos Player::genMove(const Pos &rivalMove) {
 
   std::string send;
   send = std::to_string(rival_X) + " " + std::to_string(rival_Y) + " \n";
-  // std::cout << "Sent to AI player move " << rival_X << " " << rival_Y << std::endl;
-  write(p2c[1], send.c_str(), send.size());
+
+  write(p2c[1], send.c_str(), send.size()); // write to AI process
 
   char buff[BUFFSIZE];
-  read(c2p[0], buff, BUFFSIZE); // read from the AI process. 
+  read(c2p[0], buff, BUFFSIZE); // read from AI process. 
   std::stringstream ss; ss << buff;
-  // std::cout << "Got from AI player move " << ss.str() << std::endl;
-  if (ss.str().substr(0,3) == "die") {
-    // std::cout << "Player dies!" << std::endl;
-    return Pos(-1, -1);
-  }
+  if (ss.str().substr(0,3) == "die") return die;
   int moveX, moveY;
   ss >> moveX >> moveY;
   return std::make_pair(moveX, moveY);
 }
 
 void Player::end() {
+  if(!initialized) return;
   kill(pid, 9);
   initialized = false;
 }
