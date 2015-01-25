@@ -2,10 +2,21 @@
 
 #include <unistd.h>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
+template <int DIM>
+struct POS_DIM {};
+
+template <>
+struct POS_DIM<2> {
+  typedef Pos type;
+};
+
+
 int main() {
+<<<<<<< Updated upstream
   Player p;
   p.setAI("AI/ai.py");
   p.initAI(50,50,4,4);
@@ -26,7 +37,23 @@ int main() {
     cout<<"my move: "<<move.first<<" "<<move.second<<"; AI's move: "<<m.first<<" "<<m.second<<endl;
   }
  
+=======
+  // Player p;
+  // p.setAI("AI/ai.py");
+  // p.initAI(50,50,4,4);
+
+  // std::string send;
+  // while (getline(std::cin, send)) {
+  //   std::stringstream ss;
+  //   ss << send;
+  //   int x, y;
+  //   ss >> x >> y;
+  //   POS_DIM<2>::type new_move = p.genMove(Pos(x, y));
+  // }
+>>>>>>> Stashed changes
   // pid_t pid = (pid_t)NULL;
+  Battle b;
+  for (int i = 0; )
 
   // int c2p[2]; pipe(c2p); // child to parent
 

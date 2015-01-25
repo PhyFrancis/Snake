@@ -8,16 +8,16 @@ typedef std::pair<int, int> Pos;
 
 class Player {
 
-  public:
+ public:
 
-		//*! constructor
-		Player();
+  //*! constructor
+  Player();
     
-    //*! set AI to be the filename of the excutable
-    void setAI(std::string ai);
+  //*! set AI to be the filename of the excutable
+  void setAI(std::string ai);
 
-    //*! set game board size and initial position
-    void initAI(int sizeX, int sizeY, int initX, int initY);
+  //*! set game board size and initial position
+  void initAI(int sizeX, int sizeY, int initX, int initY);
 
     //*! disconnect from AI bot
     void end();
@@ -25,23 +25,26 @@ class Player {
     //*! generate move according to rival's move
     Pos genMove(const Pos &rivalMove);
 
-		//*! destructor
-		~Player();
+  //*! make a move
+  // Pos makeMove(const Pos &move);
 
-  private:
+  //*! destructor
+  ~Player();
 
-		//*! AI excutable name
-    std::string AI;
+ private:
 
-		//*! file descriptor pipe to communicate with AI bot
-		int p2c[2]; 
-		int c2p[2]; 
+  //*! AI excutable name
+  std::string AI;
 
-		//*! is initialized
-		bool initialized;
+  //*! file descriptor pipe to communicate with AI bot
+  int p2c[2]; 
+  int c2p[2]; 
 
-		//*! to store the pid of AI process
-		pid_t pid;
+  //*! is initialized
+  bool initialized;
+
+  //*! to store the pid of AI process
+  pid_t pid;
 };
 
 #endif
