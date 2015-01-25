@@ -8,25 +8,37 @@
 
 #define BUFFSIZE 1024
 
+Player::Player() {
+	initialized = false;
+// 		pipe(p2c); // parent to child
+// 		pipe(c2p); // child to parent
+}
+
 void Player::setAI(std::string ai) {
   this->AI = ai;
   printf("set AI to be %s\n", ai.c_str());
 }
 
 void Player::initAI(int sizeX, int sizeY, int initX, int initY) {
-  pid_t pid = (pid_t)NULL;
-
-  int p2c[2]; pipe(p2c); // parent to child
-  int c2p[2]; pipe(c2p); // child to parent
+	
+	if(!initialized) {
+		pipe(p2c); // parent to child
+		pipe(c2p); // child to parent
+	}
 
   // convetion: write to the AI process using p2c[1], and read from AI process using c2p[0]:
-
+	
   pid = fork();
   if(pid < 0) {
     printf("Failed to fork AI process.\n");
     exit(1);
   }
   else if (pid == 0) {
+
+		// close un-used ends;
+		close(p2c[1]);
+		close(c2p[0]);
+
     dup2(p2c[0], STDIN_FILENO);
     dup2(c2p[1], STDOUT_FILENO);
 
@@ -54,6 +66,14 @@ void Player::initAI(int sizeX, int sizeY, int initX, int initY) {
       printf("reveive from AI: %d %d\n", moveX, moveY);
     }
   }
-
   // waitpid(pid, NULL, 0);
+	initialized = true;
+}
+
+Pos Player::genMove(const Pos &rivalMove) {
+}
+
+Player::~Player() {
+	close(p2c[0]); close(p2c[1]); 
+	close(c2p[0]); close(c2p[1]); 
 }
