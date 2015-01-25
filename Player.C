@@ -1,8 +1,8 @@
 #include "Player.h"
 #include <sstream>
 #include <unistd.h>
-#include <sys/wait.h>
 #include <string>
+#include <sys/wait.h>
 
 #include <iostream>
 
@@ -10,8 +10,6 @@
 
 Player::Player() {
 	initialized = false;
-// 		pipe(p2c); // parent to child
-// 		pipe(c2p); // child to parent
 }
 
 void Player::setAI(std::string ai) {
@@ -32,7 +30,6 @@ void Player::initAI(int sizeX, int sizeY, int initX, int initY) {
     exit(1);
   }
   else if (pid == 0) {
-
 		// close un-used ends;
 		close(p2c[1]);
 		close(c2p[0]);
@@ -63,9 +60,7 @@ Pos Player::genMove(const Pos &rivalMove) {
   int rival_Y = rivalMove.second;
 
   std::string send;
-  send = std::to_string(rival_X) + " " + std::to_string(rival_Y);
-  printf("Sent to AI: %s; ",send.c_str());
-  send += " \n";
+  send = std::to_string(rival_X) + " " + std::to_string(rival_Y) + " \n";
   write(p2c[1], send.c_str(), send.size());
 
   char buff[BUFFSIZE];
@@ -73,7 +68,7 @@ Pos Player::genMove(const Pos &rivalMove) {
   std::stringstream ss; ss << buff;
   int moveX, moveY;
   ss >> moveX >> moveY;
-  printf("reveive from AI: %d %d\n", moveX, moveY);
+  return std::make_pair(moveX, moveY);
 }
 
 void Player::end() {

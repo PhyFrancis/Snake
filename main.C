@@ -13,15 +13,17 @@ int main() {
   pair<int, int> move(10,10);
   for(int i = 10; i < 20; i++) {
     move.first = i;
-    p.genMove(move);
+    pair<int, int> m = p.genMove(move);
+    cout<<"my move: "<<move.first<<" "<<move.second<<"; AI's move: "<<m.first<<" "<<m.second<<endl;
   }
 
   p.end();
   cout<<"start second run: "<<endl;
   p.initAI(50,50,4,4);
   for(int i = 10; i < 20; i++) {
-    move.first = i;
-    p.genMove(move);
+    move.second = i;
+    pair<int, int> m = p.genMove(move);
+    cout<<"my move: "<<move.first<<" "<<move.second<<"; AI's move: "<<m.first<<" "<<m.second<<endl;
   }
  
   // pid_t pid = (pid_t)NULL;
