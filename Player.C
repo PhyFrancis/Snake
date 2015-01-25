@@ -61,11 +61,17 @@ Pos Player::genMove(const Pos &rivalMove) {
 
   std::string send;
   send = std::to_string(rival_X) + " " + std::to_string(rival_Y) + " \n";
+  // std::cout << "Sent to AI player move " << rival_X << " " << rival_Y << std::endl;
   write(p2c[1], send.c_str(), send.size());
 
   char buff[BUFFSIZE];
   read(c2p[0], buff, BUFFSIZE); // read from the AI process. 
   std::stringstream ss; ss << buff;
+  // std::cout << "Got from AI player move " << ss.str() << std::endl;
+  if (ss.str().substr(0,3) == "die") {
+    // std::cout << "Player dies!" << std::endl;
+    return Pos(-1, -1);
+  }
   int moveX, moveY;
   ss >> moveX >> moveY;
   return std::make_pair(moveX, moveY);
