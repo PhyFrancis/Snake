@@ -1,5 +1,5 @@
 # Snake
-This is for the "snake" game
+This is for the "snake" game, based on Luchang's AI program.
 
 ## Structure
 `Battle` class contains the game board and two players, it coordinates the moves of each player and displays the board (on real time hopefully).
