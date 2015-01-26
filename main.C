@@ -27,13 +27,17 @@ int main() {
   //   pair<int, int> m = p.genMove(move);
   //   cout<<"my move: "<<move.first<<" "<<move.second<<"; AI's move: "<<m.first<<" "<<m.second<<endl;
   // }
-  Battle b;
-  b.setBoard(8, 8);
-  b.setPlayer("AI-py/ai.py", "AI-py/ai.py");
   
+
+  string AI1 = "AI-py/ai.py";
+  string AI2 = "AI-hs/AI";
+  const int board_size = 20;
+
+  Battle b;
+  b.setBoard(board_size, board_size);
+  b.setPlayer(AI1, AI2);
   for (int i = 0; i < 100; i++) {
     if (b.genNextMove() == 1) break;
   }
   b.printBoard();
-  b.printBoardFancy();
 }
