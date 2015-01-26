@@ -31,6 +31,9 @@ SOBJ=$(SSRC:.S=.o)
 OBJS_SRC = $(SOBJ) $(CCOBJ) $(COBJ)
 OBJS := $(notdir $(OBJS_SRC))
 
+all : $(BIN)
+	make -C AI-hs
+
 $(BIN):  $(OBJS) $(LIBLIST)
 	@echo OBJS = $(OBJS)
 	$(CXX) $(OBJS) $(LIBLIST) $(LDFLAGS) -o $(BIN)
@@ -46,6 +49,5 @@ cps:
 	$(MAKE) -C $(BUILDDIR)
 
 clean:
-	rm -f *.dat *.o  $(BIN)
-	rm -f ../regressions/*$(me).dat
-	rm -f ../regressions/*$(me).checklog
+	rm -f *.o $(BIN) || :
+	make -C AI-hs clean

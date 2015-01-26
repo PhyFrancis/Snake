@@ -29,7 +29,7 @@ int main() {
   // }
   Battle b;
   b.setBoard(8, 8);
-  b.setPlayer("AI/ai.py", "AI/ai.py");
+  b.setPlayer("AI-py/ai.py", "AI-py/ai.py");
   
   for (int i = 0; i < 100; i++) {
     if (b.genNextMove() == 1) break;
