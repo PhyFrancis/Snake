@@ -3,7 +3,6 @@ CXX = g++ -std=c++11
 AS  = as
 LDFLAGS = -lGL -lglut -lGLEW
 
-
 BIN = NOARCH.x
 
 #

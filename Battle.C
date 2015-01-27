@@ -69,6 +69,13 @@ Battle::checkWin(const pos_t& pos1, const pos_t& pos2)
 }
 
 void
+Battle::end() 
+{
+  m_p1.end();
+  m_p2.end();
+}
+
+void
 Battle::printBoard()
 {
   for (int j = 0; j < m_sizeY; j++) {
@@ -92,4 +99,9 @@ Battle::printBoardFancy()
     std::cout << std::endl;
   }
   std::cout << std::endl;
+}
+
+Battle::~Battle() 
+{
+  end();
 }

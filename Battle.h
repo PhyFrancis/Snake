@@ -32,6 +32,12 @@ class Battle {
   void printBoard();
   void printBoardFancy();
 
+  //*! disconnect from AI
+  void end();
+
+  //*! destructor
+  ~Battle();
+
  private:
 
   int toIndex (const pos_t& pos) {
