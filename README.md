@@ -16,5 +16,6 @@ This is for the "snake" game, based on Luchang's AI program.
 - `glutInit()` will give:
 ```
 XIO:  fatal IO error 9 (Bad file descriptor) on X server ":0.0"
-      after 19 requests (19 known processed) with 0 events remaining.
+after 19 requests (19 known processed) with 0 events remaining.
 ```
+it happens after initializing Player class.
