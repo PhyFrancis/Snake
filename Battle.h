@@ -17,7 +17,6 @@ class Battle {
     m_sizeY = sizeY;
     m_board.resize(sizeX * sizeY, 0);
   }
-
   
   //*! initialize two player, connect them to AI, and set their initial positions
   void setPlayer(std::string p1, std::string p2);
@@ -37,6 +36,10 @@ class Battle {
 
   //*! destructor
   ~Battle();
+
+  const char* getBoard() { return m_board.data(); }
+  int getSizeX() { return m_sizeX; }
+  int getSizeY() { return m_sizeY; }
 
  private:
 

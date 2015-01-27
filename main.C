@@ -1,35 +1,64 @@
 #include "Battle.h"
-#include "Display.h"
-#include "glut/glutHead1.h"
+#include "Display_cyr.h"
+// #include "glut/glutHead1.h"
+#include <GL/freeglut.h>
+#include <iostream>
+#include <unistd.h>
 
 using namespace std;
 
-void glutInitAll(int &argc, char **argv) {
-  glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-  glutInitContextVersion(3, 3);
-  glutInitContextProfile(GLUT_CORE_PROFILE);
-  glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
-  glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-  glutInitWindowPosition(100, 100);
+Display* disp;
+Battle* battle;
+// void glutInitAll(int &argc, char **argv) {
+//   glutInit(&argc, argv);
+//   glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+//   glutInitContextVersion(3, 3);
+//   glutInitContextProfile(GLUT_CORE_PROFILE);
+//   glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
+//   glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+//   glutInitWindowPosition(100, 100);
+// }
+void DisplayCB() {
+  disp -> Render(battle -> getBoard(), battle -> getSizeX(), battle -> getSizeY());
+}
+
+void IdleCB() {
+  if (battle -> genNextMove() == 1)
+    battle -> end();
+  usleep(50 * 1000);
+  disp -> Render(battle -> getBoard(), battle -> getSizeX(), battle -> getSizeY());
+}
+
+void KeyboardCB(unsigned char Key, int x, int y) {
+  switch (Key) {
+    case 'q':
+      exit(0);
+  }
+}
+
+void SpecialKeyboardCB(int Key, int x, int y) {
+  disp -> getCam().OnKeyboard(Key, 0.1);
 }
 
 int main(int argc, char **argv) {
+  disp = new Display(1024, 768);
+  disp -> CreateWindow("Battle", &argc, argv);
+  // std::cout << "Window created" << std::endl;
 
-  glutInitAll(argc, argv);
+  battle = new Battle();
+  battle ->setBoard(32, 32);
+  battle ->setPlayer("AI-py/ai.py", "AI-py/ai.py");
+  // battle ->setPlayer("AI-hs/AI", "AI-py/ai.py");
 
-  string AI1 = "AI-py/ai.py";
-  string AI2 = "AI-hs/AI";
-  const int board_size = 20;
-  Battle b;
-  b.setBoard(board_size, board_size);
-  b.setPlayer(AI1, AI2);
-  for (int i = 0; i < 100; i++) {
-    if (b.genNextMove() == 1) break;
-  }
-  b.printBoard();
-  b.end();
-
-  Display dis(&b, &argc, argv);
-  dis.show();
+  glutDisplayFunc(DisplayCB);
+  glutIdleFunc(IdleCB);
+  glutKeyboardFunc(KeyboardCB);
+  glutSpecialFunc(SpecialKeyboardCB);
+  
+  disp -> InitGLEW();
+  disp -> InitVertices();
+  disp -> InitShaders();
+  
+  glutMainLoop();
+  return 0;
 }
