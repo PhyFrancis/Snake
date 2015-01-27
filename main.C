@@ -1,6 +1,6 @@
 #include "Battle.h"
 #include "Display.h"
-#include "glutHead1.h"
+#include "glut/glutHead1.h"
 
 using namespace std;
 

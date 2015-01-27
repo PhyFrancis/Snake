@@ -10,8 +10,8 @@
 #include <cmath>
 #include <GL/glew.h>
 #include <GL/freeglut.h>
-#include "from_Yuran/OpenGL/Pipeline.h"
-#include "from_Yuran/OpenGL/Camera.h"
+#include "OpenGL/Pipeline.h"
+#include "OpenGL/Camera.h"
 
 const int WINDOW_WIDTH = 1024;
 const int WINDOW_HEIGHT = 768;
@@ -45,8 +45,8 @@ GLuint gColorLocation;
 Pipeline p;
 Camera cam;
 
-const char* pVSFileName = "shader/shader.vs";
-const char* pFSFileName = "shader/shader.fs";
+const char* pVSFileName = "glut/shader.vs";
+const char* pFSFileName = "glut/shader.fs";
 
 static void RenderSceneCB()
 {

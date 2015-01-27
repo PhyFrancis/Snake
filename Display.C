@@ -1,5 +1,5 @@
 #include "Display.h"
-#include "glutHead2.h"
+#include "glut/glutHead2.h"
 
 Display::Display(Battle *_bat, int *argc, char **argv): bat(_bat) {
   this->argc = argc;
