@@ -1,7 +1,8 @@
 CC = gcc 
 CXX = g++ -std=c++11 
 AS  = as
-LDFLAGS = -lgmp -lgmpxx -fopenmp -lGL -lglut -lGLU
+LDFLAGS = -lGL -lglut -lGLEW
+
 
 BIN = NOARCH.x
 
@@ -13,7 +14,7 @@ INCLIST =
 CFLAGS= 
 CXXFLAGS= 
 ASFLAGS= 
-DFLAGS += 
+DFLAGS += -lGL -lglut -lGLEW
 
 all:$(BIN)
 
