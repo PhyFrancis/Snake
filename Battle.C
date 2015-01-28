@@ -20,7 +20,7 @@ Battle::genNextMove() {
   setBoard(newPos1, 1);
   setBoard(newPos2, 2);
 
-#define debug
+// #define debug
 #ifdef debug
   std::cout << "Player 1 makes move (" << newPos1.first << ", " << newPos1.second << ")" << std::endl;
   std::cout << "Player 2 makes move (" << newPos2.first << ", " << newPos2.second << ")" << std::endl;
@@ -41,6 +41,8 @@ Battle::setPlayer(std::string p1, std::string p2) {
   m_p2.setAI(p2);
   m_p1.initAI(m_sizeX, m_sizeY, m_init1.first, m_init1.second);
   m_p2.initAI(m_sizeX, m_sizeY, m_init2.first, m_init2.second);
+  m_p1_name = p1;
+  m_p2_name = p2;
 
   // Push their initial position into the history stack
   m_history1.push_back(m_init1);
@@ -73,6 +75,10 @@ Battle::end()
 {
   m_p1.end();
   m_p2.end();
+  m_history1.clear();
+  m_history2.clear();
+  m_board.clear();
+  m_board.resize(m_sizeX * m_sizeY, 0.0);
 }
 
 void
@@ -104,4 +110,11 @@ Battle::printBoardFancy()
 Battle::~Battle() 
 {
   end();
+}
+
+void
+Battle::restart() {
+  end();
+
+  setPlayer(m_p1_name, m_p2_name);
 }

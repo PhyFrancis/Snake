@@ -34,6 +34,8 @@ class Battle {
   //*! disconnect from AI
   void end();
 
+  void restart();
+
   //*! destructor
   ~Battle();
 
@@ -64,6 +66,7 @@ class Battle {
   std::vector<char> m_board;
   
   Player m_p1, m_p2;
+  std::string m_p1_name, m_p2_name;
 };
 
 #endif

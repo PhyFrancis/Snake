@@ -24,14 +24,15 @@ void DisplayCB() {
 
 void IdleCB() {
   if (battle -> genNextMove() == 1)
-    battle -> end();
-  usleep(50 * 1000);
+    battle -> restart();
+  usleep(20 * 1000);
   disp -> Render(battle -> getBoard(), battle -> getSizeX(), battle -> getSizeY());
 }
 
 void KeyboardCB(unsigned char Key, int x, int y) {
   switch (Key) {
     case 'q':
+      battle -> end();
       exit(0);
   }
 }

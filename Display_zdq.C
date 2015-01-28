@@ -1,4 +1,4 @@
-#include "Display.h"
+#include "Display_zdq.h"
 #include "glut/glutHead2.h"
 
 Display::Display(Battle *_bat, int *argc, char **argv): bat(_bat) {
