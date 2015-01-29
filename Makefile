@@ -33,6 +33,7 @@ OBJS := $(notdir $(OBJS_SRC))
 
 all : $(BIN)
 	make -C AI-hs
+	make -C Client/observer
 
 $(BIN):  $(OBJS) $(LIBLIST)
 	@echo OBJS = $(OBJS)

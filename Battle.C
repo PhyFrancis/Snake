@@ -22,8 +22,8 @@ Battle::genNextMove() {
   setBoard(newPos1, 1);
   setBoard(newPos2, 2);
 
-  // std::cout << "Player 1 makes move (" << newPos1.first << ", " << newPos1.second << ")" << std::endl;
-  // std::cout << "Player 2 makes move (" << newPos2.first << ", " << newPos2.second << ")" << std::endl;
+  std::cout << "Player 1 makes move (" << newPos1.first << ", " << newPos1.second << ")" << std::endl;
+  std::cout << "Player 2 makes move (" << newPos2.first << ", " << newPos2.second << ")" << std::endl;
   
   for(int i = 0;  i < observer_pipes.size(); ++i) {
     std::string send;
@@ -79,6 +79,7 @@ void Battle::addObserver(std::string ob)
   else if (pid == 0) {
 		// close un-used ends;
 		close(p2c[1]);
+
     dup2(p2c[0], STDIN_FILENO);
 
     std::string x = std::to_string(m_sizeX);
@@ -89,7 +90,6 @@ void Battle::addObserver(std::string ob)
   else {
 		// close un-used ends;
 		close(p2c[0]);
-    // dup2(p2c[1], STDOUT_FILENO);
   }
 }
 

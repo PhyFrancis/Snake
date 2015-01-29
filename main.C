@@ -9,6 +9,7 @@ int main(int argc, char **argv) {
   battle ->setPlayer("AI-py/ai.py", "AI-py/ai.py");
   battle ->addObserver("Client/observer/observer.x");
   battle ->addObserver("Client/observer/observer.x");
+  battle ->addObserver("Client/observer/observer.x");
 
   battle ->genMove(1000);
   battle ->end();
