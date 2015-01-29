@@ -24,8 +24,13 @@ Battle::genNextMove() {
 
   // std::cout << "Player 1 makes move (" << newPos1.first << ", " << newPos1.second << ")" << std::endl;
   // std::cout << "Player 2 makes move (" << newPos2.first << ", " << newPos2.second << ")" << std::endl;
-  std::cout << newPos1.first << " " << newPos1.second << " ";
-  std::cout << newPos2.first << " " << newPos2.second << std::endl;
+  
+  for(int i = 0;  i < observer_pipes.size(); ++i) {
+    std::string send;
+    send = std::to_string(newPos1.first) + " " + std::to_string(newPos1.second) + " "
+         + std::to_string(newPos2.first) + " " + std::to_string(newPos2.second) + " \n";
+    write(observer_pipes[i][1], send.c_str(), send.size());
+  }
 
   return 0;
 }
@@ -33,7 +38,7 @@ Battle::genNextMove() {
 //*! get next n move from both player and update board
 int Battle::genMove(int n) 
 {
-  for(int i = 0; i < n; ++i) genNextMove();
+  for(int i = 0; i < n; ++i) if(genNextMove()) return 1;
 }
 
 void
@@ -62,8 +67,9 @@ Battle::setPlayer(std::string p1, std::string p2) {
 //*! Add client side observer, which listen to battle output and displays the board according to Client Protocol
 void Battle::addObserver(std::string ob) 
 {
-  int p2c[2];
-  pipe(p2c); // parent to child
+  int *p2c = new int[2];
+  pipe(p2c);
+  observer_pipes.push_back(p2c);
 
   pid_t pid = fork();
   if(pid < 0) {
@@ -83,7 +89,7 @@ void Battle::addObserver(std::string ob)
   else {
 		// close un-used ends;
 		close(p2c[0]);
-    dup2(p2c[1], STDOUT_FILENO);
+    // dup2(p2c[1], STDOUT_FILENO);
   }
 }
 
@@ -112,6 +118,7 @@ Battle::end()
   m_history2.clear();
   m_board.clear();
   m_board.resize(m_sizeX * m_sizeY, 0.0);
+  for(int i = 0; i < observer_pipes.size(); ++i) delete [] observer_pipes[i];
 }
 
 void

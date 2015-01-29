@@ -72,6 +72,7 @@ class Battle {
   
   Player m_p1, m_p2;
   std::string m_p1_name, m_p2_name;
+  std::vector<int *> observer_pipes;
 };
 
 #endif
