@@ -20,9 +20,15 @@ class Battle {
   
   //*! initialize two player, connect them to AI, and set their initial positions
   void setPlayer(std::string p1, std::string p2);
-  
+
+  //*! Add client side observer, which listen to battle output and displays the board according to Client Protocol
+  void addObserver(std::string ob);
+
   //*! get next move from both player and update board
   int genNextMove();
+
+  //*! get next n move from both player and update board
+  int genMove(int n);
 
   //*! check either player has died or not
   bool checkWin(const pos_t& pos1, const pos_t& pos2);

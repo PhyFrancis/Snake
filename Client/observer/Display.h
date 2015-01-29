@@ -38,8 +38,8 @@ class Display {
   Pipeline m_pipe;
   Camera m_cam;
 
-  std::string m_vs_file = "shader.vs";
-  std::string m_fs_file = "shader.fs";
+  std::string m_vs_file = "/home/phyfrancis/EularProject/Snake/Client/observer/shader.vs";
+  std::string m_fs_file = "/home/phyfrancis/EularProject/Snake/Client/observer/shader.fs";
 }; // ----- end of class Display -----
 
 
