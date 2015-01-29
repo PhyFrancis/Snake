@@ -20,7 +20,7 @@ Battle::genNextMove() {
   setBoard(newPos1, 1);
   setBoard(newPos2, 2);
 
-// #define debug
+#define debug
 #ifdef debug
   std::cout << "Player 1 makes move (" << newPos1.first << ", " << newPos1.second << ")" << std::endl;
   std::cout << "Player 2 makes move (" << newPos2.first << ", " << newPos2.second << ")" << std::endl;
@@ -83,19 +83,6 @@ Battle::end()
 
 void
 Battle::printBoard()
-{
-  for (int j = 0; j < m_sizeY; j++) {
-    for (int i = 0; i < m_sizeX; i++) {
-      int index = i + j * m_sizeX;
-      std::cout << static_cast<int>(m_board[index]) << " ";
-    }
-    std::cout << std::endl;
-  }
-  std::cout << std::endl;
-}
-
-void
-Battle::printBoardFancy()
 {
   for (int j = 0; j < m_sizeY; j++) {
     for (int i = 0; i < m_sizeX; i++) {

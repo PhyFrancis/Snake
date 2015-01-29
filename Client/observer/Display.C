@@ -1,4 +1,4 @@
-#include "Display_cyr.h"
+#include "Display.h"
 #include <iostream>
 #include <cstring>
 
