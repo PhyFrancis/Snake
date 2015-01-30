@@ -1,7 +1,7 @@
 CC = gcc 
 CXX = g++ -std=c++11 
 AS  = as
-LDFLAGS = -lGL -lglut -lGLEW
+LDFLAGS = -lGL -lglut -lGLEW -lpthread
 
 BIN = observer.x
 
@@ -11,7 +11,7 @@ BIN = observer.x
 INCLIST = 
 
 CFLAGS= 
-CXXFLAGS= 
+CXXFLAGS= -pthread
 ASFLAGS= 
 DFLAGS += -lGL -lglut -lGLEW
 

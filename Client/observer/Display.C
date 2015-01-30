@@ -4,8 +4,9 @@
 
 Display::Display(int w_width, int w_height) :
     m_width(w_width), m_height(w_height),
-    m_cam(Vector3f(-3.0f, 0.0f, -6.0f),
-          Vector3f(0.3f, 0.0f, 1.0f),
+    m_cam(w_width, w_height,
+          Vector3f(0.0f, 0.0f, -6.0f),
+          Vector3f(0.0f, 0.0f, 10.0f),
           Vector3f(0.0f, 1.0f, 0.0f)) {
   // Set the camera and perspective of the pipeline
   m_pipe.SetCamera(m_cam.getPos(),

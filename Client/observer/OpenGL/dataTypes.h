@@ -4,7 +4,7 @@
 #include <math.h>
 
 #ifndef M_PI
-#define M_PI 3.14159265358979323846
+#define M_PI 3.14159265358979323846f
 #endif // M_PI
 #define ToRadian(x) ((x) * M_PI / 180.0f)
 #define ToDegree(x) ((x) * 180.0f / M_PI)
@@ -27,12 +27,16 @@ struct Vector3f {
   Vector3f(float _x, float _y, float _z) :
       x(_x), y(_y), z(_z) {}
 
-  Vector3f cross(const Vector3f& v) {
+  Vector3f cross(const Vector3f& v) const {
     const float _x = y * v.z - z * v.y;
     const float _y = z * v.x - x * v.z;
     const float _z = x * v.y - y * v.x;
 
     return Vector3f(_x, _y, _z);
+  }
+
+  float length() const {
+    return sqrtf(x * x + y * y + z * z);
   }
 
   Vector3f& normalize() {
@@ -42,6 +46,8 @@ struct Vector3f {
     z /= length;
     return *this;
   }
+
+  void rotate (float Angle, const Vector3f& Axe);
 
   Vector3f& operator*= (float f) {
     x *= f;
@@ -66,6 +72,12 @@ struct Vector3f {
     y -= v.y;
     z -= v.z;
     return *this;
+  }
+
+  Vector3f operator- (const Vector3f& v) {
+    Vector3f ret = *this;
+    ret -= v;
+    return ret;
   }
 };
 
@@ -151,12 +163,12 @@ struct Matrix4f {
     m[3][3] = 0.0f;
   }
 
-  void InitCameraTransform(const Vector3f& Target, const Vector3f& Up) {
-    Vector3f N = Target;
+  void InitCameraTransform(const Vector3f& Dir, const Vector3f& Up) {
+    Vector3f N = Dir;
     N.normalize();
     Vector3f U = Up;
     U.normalize();
-    U = U.cross(Target);
+    U = U.cross(N);
     Vector3f V = N.cross(U);
 
     m[0][0] = U.x; m[0][1] = U.y; m[0][2] = U.z; m[0][3] = 0.0f;
@@ -178,6 +190,21 @@ struct Matrix4f {
 
     return Ret;
   }
+};
+
+struct Quaternion {
+  float x, y, z, w;
+
+  Quaternion(float x_, float y_, float z_, float w_) :
+      x(x_), y(y_), z(z_), w(w_) {}
+
+  Quaternion conjugate();
+
+  Quaternion& normalize();
+
+  Quaternion operator* (const Quaternion& r);
+
+  Quaternion operator*(const Vector3f& v);
 };
 
 

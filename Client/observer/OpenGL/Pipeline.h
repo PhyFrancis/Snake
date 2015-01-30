@@ -43,7 +43,7 @@ class Pipeline
     TranslationTrans.InitTranslationTransform(m_worldPos.x, m_worldPos.y, m_worldPos.z);
     PerspTrans.InitPerspectiveProj(m_persProj);
     CamPosTrans.InitTranslationTransform(-m_camera.Pos.x, -m_camera.Pos.y, -m_camera.Pos.z);
-    CamRotationTrans.InitCameraTransform(m_camera.Target, m_camera.Up);
+    CamRotationTrans.InitCameraTransform(m_camera.Target - m_camera.Pos, m_camera.Up);
     // std::cout << PerspTrans.m[1][1] << std::endl;
     m_transformation = PerspTrans * CamRotationTrans * CamPosTrans * TranslationTrans * RotateTrans * ScaleTrans;
     return &m_transformation;
