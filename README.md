@@ -10,5 +10,5 @@ This is for the "snake" game, based on Luchang's AI program.
 - [X] Add `Client Protocol` to define the interface of `Observer` or `Human Player`, it also separates the ugly OpenGL stuff from the main function.
 - [X] let `Battle` support multiple Clients.
 - [X] Add mouse and/or keyboard interaction for camera.
-- [] Add a human player client who can play against computer or against each other.
-- [] Add a better user interface for the client (start button, user instructions, etc.).
+- [ ] Add a human player client who can play against computer or against each other.
+- [ ] Add a better user interface for the client (start button, user instructions, etc.).
