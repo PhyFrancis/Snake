@@ -176,55 +176,38 @@ void
 Display::Render(const char* board, int sizeX, int sizeY) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  m_pipe.SetCamera(m_cam.getPos(),
+                   m_cam.getTarget(),
+                   m_cam.getUp());
+  m_pipe.Scale(0.05f);
   for (int j = 0; j < sizeY + 2; j++) {
     for (int i = 0; i < sizeX + 2; i++) {
       if (i == 0 || i == sizeX + 1 || j == 0 || j == sizeY + 1) {
         // Border
-        m_pipe.Scale(0.05f);
-        // m_pipe.Rotate(0.0f, 30.0f, 0.0f);
-        m_pipe.WorldPos((i - sizeX / 2) * 0.12f, (j - sizeY / 2) * 0.12f, 10.0f);
-        // m_pipe.WorldPos(i * 0.12f, j * 0.12f, 20.0f);
-        m_pipe.SetCamera(m_cam.getPos(),
-                         m_cam.getTarget(),
-                         m_cam.getUp());
-        m_pipe.SetPerspectiveProj(30.0f, m_width, m_height, 1.0f, 1000.0f);
-        glUniformMatrix4fv(m_trans, 1, GL_TRUE, (const GLfloat*)m_pipe.getTrans());
         Vector4f color = Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
         glUniform4fv(m_color, 1, (const GLfloat*)&color);
-      
-        glBindVertexArray(m_cube_vao);
-        // glCullFace(GL_BACK);
-
-        glDrawElements(GL_TRIANGLES, m_id_n, GL_UNSIGNED_INT, 0);
       } else {
         int idx = i - 1 + (j - 1) * sizeX;
         // This position is not occupied
         if (board[idx] == 0) continue;
-        // std::cout << "(" << i << ", " << j << ")" << std::endl;
-        // std::cout << "(" << i << ", " << j << ")" << std::endl;
 
-        m_pipe.Scale(0.05f);
-        // m_pipe.Rotate(0.0f, 30.0f, 0.0f);
-        m_pipe.WorldPos((i - sizeX / 2) * 0.12f, (j - sizeY / 2) * 0.12f, 10.0f);
-        // m_pipe.WorldPos(i * 0.12f, j * 0.12f, 20.0f);
-        m_pipe.SetCamera(m_cam.getPos(),
-                         m_cam.getTarget(),
-                         m_cam.getUp());
-        m_pipe.SetPerspectiveProj(30.0f, m_width, m_height, 1.0f, 1000.0f);
-        glUniformMatrix4fv(m_trans, 1, GL_TRUE, (const GLfloat*)m_pipe.getTrans());
         Vector4f color = Vector4f(0.0f, 0.0f, 0.0f, 1.0f);
         if (board[idx] == 1) // Red for player 1
           color = Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
         else if (board[idx] == 2) // Blue for player 2
           color = Vector4f(0.0f, 0.0f, 1.0f, 1.0f);
 
+        // Set color as uniform variable
         glUniform4fv(m_color, 1, (const GLfloat*)&color);
-      
-        glBindVertexArray(m_cube_vao);
-        // glCullFace(GL_BACK);
-
-        glDrawElements(GL_TRIANGLES, m_id_n, GL_UNSIGNED_INT, 0);
       }
+      m_pipe.WorldPos((i - sizeX / 2) * 0.12f, (j - sizeY / 2) * 0.12f, 10.0f);
+      // m_pipe.WorldPos(i * 0.12f, j * 0.12f, 20.0f);
+      // m_pipe.SetPerspectiveProj(30.0f, m_width, m_height, 1.0f, 1000.0f);
+      glUniformMatrix4fv(m_trans, 1, GL_TRUE, (const GLfloat*)m_pipe.getTrans());
+      glBindVertexArray(m_cube_vao);
+      // glCullFace(GL_BACK);
+
+      glDrawElements(GL_TRIANGLES, m_id_n, GL_UNSIGNED_INT, 0);
     }
   }
 
