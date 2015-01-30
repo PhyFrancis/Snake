@@ -44,6 +44,7 @@ Display::InitGLEW() {
     return;
   }
   glEnable(GL_CULL_FACE);
+  glEnable(GL_DEPTH_TEST);
 
   std::cout << "GL version: " << glGetString(GL_VERSION) << std::endl;
 }

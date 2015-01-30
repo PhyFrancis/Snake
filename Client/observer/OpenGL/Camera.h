@@ -82,7 +82,7 @@ class Camera {
 
     m_angleH += (float)dx / 20.0f;
     m_angleV += (float)dy / 20.0f;
-    std::cout << "Angle H is " << m_angleH << ", angle V is " << m_angleV << std::endl;
+    // std::cout << "Angle H is " << m_angleH << ", angle V is " << m_angleV << std::endl;
 
     Update();
   }
