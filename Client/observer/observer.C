@@ -55,16 +55,16 @@ void SpecialKeyboardCB(int Key, int x, int y) {
 }
 
 void MouseCB(int button, int state, int x, int y) {
-  std::cout << "Mouse Event! " << state << std::endl;
+  // std::cout << "Mouse Event! " << state << std::endl;
   if (button == 3) { // Wheel up
     disp -> getCam().MoveForward(0.2);
   } else if (button == 4) { // Wheel down
     disp -> getCam().MoveBackward(0.2);
   } else if (button == 0 && state == 0) {
-    std::cout << "Mouse down" << std::endl;
+    // std::cout << "Mouse down" << std::endl;
     disp -> getCam().OnMouseDown(0, x, y);
   } else if (button == 0 && state == 1) {
-    std::cout << "Mouse up" << std::endl;
+    // std::cout << "Mouse up" << std::endl;
     disp -> getCam().OnMouseUp(0, x, y);
   }
 }
